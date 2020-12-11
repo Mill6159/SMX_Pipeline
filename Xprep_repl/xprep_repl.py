@@ -157,10 +157,10 @@ sg_symbol = space_Group_diction[str(space_Group_Number)]
 # print('TEST', d1,d2,d3)
 
 # noAtoms_ASU = input('How many atoms are in the ASU? ')
-noAtoms_ASU = 100
+noAtoms_ASU = 129
 SFAC = input("Input SFAC: ")
 UNIT = input('Input UNIT: ')
-TREF = input('Input TREF: ')
+# TREF = input('Input TREF: ')
 
 CellCalcs = unitCell_Calcs(spacegroupSymbol=str(sg_symbol),a=float(d1),b=float(d2),c=float(d3),alpha=float(alpha),beta=float(beta),gamma=float(gamma),no_atoms_ASU=noAtoms_ASU)
 
@@ -203,8 +203,8 @@ except KeyError:
 
 print('SFAC', SFAC)
 print('UNIT', UNIT)
-print('TREF', TREF)
-print('\nHKLF 4')
+print('TREF')
+print('\nHKLF', str('%s'%str(round(z,2))))
 print('END')
 
 # sys.stdout = orig_stdout
