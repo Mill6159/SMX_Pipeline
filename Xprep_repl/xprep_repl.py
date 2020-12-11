@@ -156,8 +156,8 @@ sg_symbol = space_Group_diction[str(space_Group_Number)]
 
 # print('TEST', d1,d2,d3)
 
-# noAtoms_ASU = input('How many atoms are in the ASU? ')
-noAtoms_ASU = 129
+noAtoms_ASU = int(input('How many atoms are in the ASU? '))
+# noAtoms_ASU = 129
 SFAC = input("Input SFAC: ")
 UNIT = input('Input UNIT: ')
 # TREF = input('Input TREF: ')
