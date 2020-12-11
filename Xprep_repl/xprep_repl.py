@@ -57,7 +57,7 @@ data_diction={}
 for file in os.listdir(directory):
      filename = os.fsdecode(file)
      if filename.endswith(".HKL"):
-     	# print('--> Reading in file: ',os.path.join(directory, filename))
+     	print('--> Reading in file: ',os.path.join(directory, filename))
      	data_diction['%s'%str(filename)]=[]
      	data_diction['%s_headerData'%str(filename)]=[]
      	with open(filename, "r") as f:
@@ -68,25 +68,18 @@ for file in os.listdir(directory):
      			if line.startswith('!'):
      				# print(line)
      				data_diction['%s_headerData'%str(filename)].append(line)
+     				x=str(data_diction['%s_headerData'%str(filename)])
 
-
-x = str(data_diction['XSCALE.HKL_headerData'])
 
 ###########################################
 # Find Unit cell Parameters
 ###########################################
 
-pattern_UnitCell = re.compile(r'(!UNIT_CELL_CONSTANTS=)(\s)+([a-zA-Z0-9-]\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)') 
+pattern_UnitCell = re.compile(r'(!UNIT_CELL_CONSTANTS=)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)(\s)+([0-9]+\.[0-9]+)') 
 
 matches_UnitCell = pattern_UnitCell.finditer(x) 
 
 for match in matches_UnitCell:
-	# print(match.group(3))
-	# print(match.group(5)) 
-	# print(match.group(7))
-	# print(match.group(9))
-	# print(match.group(11))
-	# print(match.group(13))
 	d1=str(match.group(3))
 	d2=str(match.group(5))
 	d3=str(match.group(7))
@@ -95,7 +88,7 @@ for match in matches_UnitCell:
 	gamma=str(match.group(13))
 	s2=(str(match.group(3)) + ' ' + str(match.group(5)) + ' ' + str(match.group(7)) + ' ' + str(match.group(9)) + ' ' + str(match.group(11)) + ' ' + str(match.group(13)))
 
-
+# print(d1)
 ###########################################
 # Find Energy
 ###########################################
@@ -113,7 +106,8 @@ for match in matches_Wavelength:
 # TITL Name
 ###########################################
 
-pattern_TITL = re.compile(r'(INPUT_FILE=)([0-9]+_[a-zA-Z]+_[a-zA-Z]+_[0-9]+_[0-9]+)')
+# pattern_TITL = re.compile(r'(INPUT_FILE=)([a-zA-Z0-9.-_]+_[a-zA-Z]+_[a-zA-Z]+_[0-9]+_[0-9]+)')
+pattern_TITL = re.compile(r'(INPUT_FILE=)([a-zA-Z0-9.-_]+)')
 matches_TITL = pattern_TITL.finditer(x) 
 
 for match in matches_TITL:
@@ -169,7 +163,7 @@ z = CellCalcs.calc_Z()
 
 #####################################################
 #####################################################
-L1='TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number)
+# L1='TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number)
 # f = open('cXPREP.ins','w')
 # f.write(str(L1))
 
@@ -207,8 +201,8 @@ print('TREF')
 print('\nHKLF', str('%s'%str(round(z,2))))
 print('END')
 
-# sys.stdout = orig_stdout
-# f.close()
+sys.stdout = orig_stdout
+f.close()
 
 
 
