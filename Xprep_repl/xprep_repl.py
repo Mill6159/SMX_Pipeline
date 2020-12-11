@@ -5,7 +5,32 @@ import numpy as np
 import re
 import os
 from matplotlib import pyplot as plt
+# import pymatgen.symmetry.analyzer as psa
+# import gemmi as gm
+# import spglib
+
+from pyxtal.symmetry import Group
+from pyxtal.symmetry import Wyckoff_position as wp
 #################
+
+#####################################################
+#####################################################
+# Testing pyxtal.symmetry Module:
+
+g = Group(191)
+
+sym_Ops=g.Wyckoff_positions[0]
+
+sym_Ops2 = wp.from_group_and_index(191, 0)
+
+# print(sym_Ops2)
+
+sym_Ops3 = wp.from_symops(ops=sym_Ops2,group=191)
+
+# print(sym_Ops3)
+
+#####################################################
+#####################################################
 
 ###################
 # Read in data file
@@ -101,14 +126,53 @@ for match in matches_TITL:
 	space_Group_Number=(str(match.group(3)))
 
 
-print('TITL', TITL_name, 'in', 'ENTER SPACE GROUP', '#%s'%str(space_Group_Number))
-print('REM', ' reset to', 'ENTER SPACE GROUP', '#%s'%str(space_Group_Number))
+space_Group_diction = {
+	'16': 'P222',
+	'191': 'P6/mmm'
+}
+
+
+symmetry_op_diction = {
+	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z',
+	'16': 'SYMM +X +Y +Z\nSYMM +X +Y +Z'
+}
+
+
+
+#####################################################
+#####################################################
+# Calculating Unit Cell Volume
+
+
+
+
+#####################################################
+#####################################################
+
+print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
+print('REM', ' reset to', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('CELL',s1,s2)
-print('ZERR')
+print('ZERR', 'INSERT Z HERE', '0.000', '0.000', '0.000')
 print('LATT', '-1')
-print('SYMM')
-print('SYMM')
-print('SYMM')
+
+
+try:
+	print(symmetry_op_diction[str(space_Group_Number)])
+except KeyError:
+	print('------->')
+	print('We currently do not have the symmtry operators for that particular space group')
+	print('The script has failed & terminated...')
+	print('Contact rcm347@cornell.edu such that the issue can be address!')
+	print('<-------')
+	exit()
+
+
+## User Inputs ##
+
+# SFAC = input('Input SFAC: ')
+# UNIT = input('Input UNIT: ')
+# TREF = input('Input TREF: ')
+
 print('SFAC')
 print('UNIT')
 print('TREF')
