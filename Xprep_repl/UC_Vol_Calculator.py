@@ -13,7 +13,7 @@ class unitCell_Calcs():
 		'''Initialize parameters..
 
 		'''
-		print('---> Starting Unit Cell Calculations')
+		# print('---> Starting Unit Cell Calculations')
 		self.spacegroupSymbol=spacegroupSymbol
 		self.a = a
 		self.b = b
@@ -33,6 +33,7 @@ class unitCell_Calcs():
 
 		orthorhombic=['P222','P2221','P21212','P212121','C2221','C222','F222','I222','I212121']
 		tetragonal=['P4','P41','P42','P43','I4','I41']
+		hexagonal=['P6/mmm']
 
 		if spacegroupSymbol=='P1':
 			unitCell.append('triclinic')
@@ -42,6 +43,8 @@ class unitCell_Calcs():
 			unitCell.append('orthorhombic')
 		elif spacegroupSymbol in tetragonal:
 			unitCell.append('tetragonal')
+		elif spacegroupSymbol in hexagonal:
+			unitCell.append('hexagonal')
 
 		self.unitCell=unitCell[0]
 
@@ -106,12 +109,12 @@ class unitCell_Calcs():
 
 
 
-test = unitCell_Calcs(spacegroupSymbol='P222')
+# test = unitCell_Calcs(spacegroupSymbol='P222')
 
-x=test.unitCell_determination()
-print(x)
-y=test.calc_UC_volume()
-print(y)
+# x=test.unitCell_determination()
+# print(x)
+# y=test.calc_UC_volume()
+# print(y)
 
-w=test.calc_Z()
-print(w)
+# # w=test.calc_Z()
+# print(w)

@@ -5,6 +5,8 @@ import numpy as np
 import re
 import os
 from matplotlib import pyplot as plt
+from UC_Vol_Calculator import *
+import sys
 # import pymatgen.symmetry.analyzer as psa
 # import gemmi as gm
 # import spglib
@@ -12,6 +14,7 @@ from matplotlib import pyplot as plt
 from pyxtal.symmetry import Group
 from pyxtal.symmetry import Wyckoff_position as wp
 #################
+
 
 #####################################################
 #####################################################
@@ -54,7 +57,7 @@ data_diction={}
 for file in os.listdir(directory):
      filename = os.fsdecode(file)
      if filename.endswith(".HKL"):
-     	print('--> Reading in file: ',os.path.join(directory, filename))
+     	# print('--> Reading in file: ',os.path.join(directory, filename))
      	data_diction['%s'%str(filename)]=[]
      	data_diction['%s_headerData'%str(filename)]=[]
      	with open(filename, "r") as f:
@@ -84,6 +87,12 @@ for match in matches_UnitCell:
 	# print(match.group(9))
 	# print(match.group(11))
 	# print(match.group(13))
+	d1=str(match.group(3))
+	d2=str(match.group(5))
+	d3=str(match.group(7))
+	alpha=str(match.group(9))
+	beta=str(match.group(11))
+	gamma=str(match.group(13))
 	s2=(str(match.group(3)) + ' ' + str(match.group(5)) + ' ' + str(match.group(7)) + ' ' + str(match.group(9)) + ' ' + str(match.group(11)) + ' ' + str(match.group(13)))
 
 
@@ -133,8 +142,8 @@ space_Group_diction = {
 
 
 symmetry_op_diction = {
-	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z',
-	'16': 'SYMM +X +Y +Z\nSYMM +X +Y +Z'
+	'16': 'SYMM +X -Y 1/2-Z\nSYMM -X +Y -Z\nSYMM -X -Y 1/2+Z',
+	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z'
 }
 
 
@@ -143,16 +152,35 @@ symmetry_op_diction = {
 #####################################################
 # Calculating Unit Cell Volume
 
+sg_symbol = space_Group_diction[str(space_Group_Number)]
 
+# print('TEST', d1,d2,d3)
+
+# noAtoms_ASU = input('How many atoms are in the ASU? ')
+noAtoms_ASU = 100
+SFAC = input("Input SFAC: ")
+UNIT = input('Input UNIT: ')
+TREF = input('Input TREF: ')
+
+CellCalcs = unitCell_Calcs(spacegroupSymbol=str(sg_symbol),a=float(d1),b=float(d2),c=float(d3),alpha=float(alpha),beta=float(beta),gamma=float(gamma),no_atoms_ASU=noAtoms_ASU)
+
+z = CellCalcs.calc_Z()
 
 
 #####################################################
 #####################################################
+L1='TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number)
+# f = open('cXPREP.ins','w')
+# f.write(str(L1))
+
+orig_stdout = sys.stdout
+f = open('cXPREP.ins', 'w')
+sys.stdout = f
 
 print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('REM', ' reset to', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('CELL',s1,s2)
-print('ZERR', 'INSERT Z HERE', '0.000', '0.000', '0.000')
+print('ZERR', str('%s'%str(round(z,2))), '0.000', '0.000', '0.000')
 print('LATT', '-1')
 
 
@@ -169,17 +197,18 @@ except KeyError:
 
 ## User Inputs ##
 
-# SFAC = input('Input SFAC: ')
+# SFAC = input("Input SFAC: ")
 # UNIT = input('Input UNIT: ')
 # TREF = input('Input TREF: ')
 
-print('SFAC')
-print('UNIT')
-print('TREF')
+print('SFAC', SFAC)
+print('UNIT', UNIT)
+print('TREF', TREF)
 print('\nHKLF 4')
 print('END')
 
-
+# sys.stdout = orig_stdout
+# f.close()
 
 
 
