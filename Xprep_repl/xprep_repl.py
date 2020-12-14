@@ -7,6 +7,8 @@ import os
 from matplotlib import pyplot as plt
 from UC_Vol_Calculator import *
 import sys
+
+
 # import pymatgen.symmetry.analyzer as psa
 # import gemmi as gm
 # import spglib
@@ -94,7 +96,7 @@ for match in matches_UnitCell:
 ###########################################
 
 
-pattern_WaveLength = re.compile(r'(X-RAY_WAVELENGTH=)(\s)+([a-zA-Z0-9-]\.[0-9]+)')
+pattern_WaveLength = re.compile(r'(X-RAY_WAVELENGTH=)(\s)+([a-zA-Z0-9-]+\.[0-9]+)')
 matches_Wavelength = pattern_WaveLength.finditer(x) 
 
 for match in matches_Wavelength:
@@ -137,7 +139,8 @@ space_Group_diction = {
 
 symmetry_op_diction = {
 	'16': 'SYMM +X -Y 1/2-Z\nSYMM -X +Y -Z\nSYMM -X -Y 1/2+Z',
-	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z'
+	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z',
+	'192': 'SYMM'
 }
 
 
