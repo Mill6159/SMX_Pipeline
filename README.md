@@ -1,12 +1,15 @@
 # Basic description of the pipeline
 
+__There is a README.md file in each subdirectory to describe the necessary details
+for each script__
+
 ## To run install the following modules
 
 ```bash
 pip install cbf
 ```
 
-## To run the script
+## To run the script cbf_parser.py
 
 ```bash
 python cbf_parser.py
