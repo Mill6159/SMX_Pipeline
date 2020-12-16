@@ -152,7 +152,8 @@ for match in matches_TITL:
 space_Group_diction = {
 	'16': 'P222',
 	'19': 'P212121',
-	'191': 'P6/mmm'
+	'191': 'P6/mmm',
+	'192': 'Something'
 }
 
 
@@ -206,6 +207,13 @@ sg_symbol = space_Group_diction[str(space_Group_Number)]
 
 noAtoms_ASU = int(input('How many atoms are in the ASU? '))
 # noAtoms_ASU = 129
+LATT_user = input('Is the molecule centrosymmetric? ')
+
+if LATT_user == 'Y' or 'y' or 'YES' or 'yes' or 'Yes':
+	LATT='1'
+else:
+	LATT='-1'
+
 SFAC = input("Input SFAC: ")
 UNIT = input('Input UNIT: ')
 # TREF = input('Input TREF: ')
@@ -240,7 +248,7 @@ except KeyError:
 print('REM', ' reset to', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('CELL',s1,s2)
 print('ZERR', str('%s'%str(round(z))), '0.000', '0.000', '0.000', '0.000', '0.000', '0.000')
-print('LATT', '-1')
+print('LATT', LATT)
 
 
 # try:
