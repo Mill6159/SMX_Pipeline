@@ -180,7 +180,7 @@ sys.stdout = f
 print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('REM', ' reset to', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('CELL',s1,s2)
-print('ZERR', str('%s'%str(round(z,2))), '0.000', '0.000', '0.000')
+print('ZERR', str('%s'%str(round(z))), '0.000', '0.000', '0.000', '0.000', '0.000', '0.000')
 print('LATT', '-1')
 
 
