@@ -22,13 +22,15 @@ from pyxtal.symmetry import Wyckoff_position as wp
 #####################################################
 # Testing pyxtal.symmetry Module:
 
-g = Group(191)
+g = Group(19)
 
 sym_Ops=g.Wyckoff_positions[0]
 
-sym_Ops2 = wp.from_group_and_index(191, 0)
+sym_Ops2 = wp.from_group_and_index(19, 0)
 
-# print(sym_Ops2)
+print(list(sym_Ops2))
+
+print(sym_Ops2)
 
 sym_Ops3 = wp.from_symops(ops=sym_Ops2,group=191)
 
@@ -138,7 +140,8 @@ space_Group_diction = {
 
 
 symmetry_op_diction = {
-	'16': 'SYMM +X -Y 1/2-Z\nSYMM -X +Y -Z\nSYMM -X -Y 1/2+Z',
+	'16': 'SYMM -X, -Y, +Z\nSYMM +X, -Y, -Z\nSYMM -X, +Y, -Z',
+	'19':'SYMM -X+1/2, -Y, Z+1/2\nSYMM -X, Y+1/2, -Z+1/2\nSYMM X+1/2, -Y+1/2, -Z',
 	'191': 'SYMM -Y, X-Y, +Z\nSYMM Y-X, -X, +Z\nSYMM -X, -Y, +Z\nSYMM +Y, Y-X, +Z\nSYMM X-Y, +X, +Z\nSYMM +Y, +X, -Z\nSYMM X-Y, -Y, -Z\nSYMM -X, Y-X, -Z\nSYMM -Y, -X, -Z\nSYMM Y-X, +Y, -Z\nSYMM +X, X-Y, -Z',
 	'192': 'SYMM'
 }
@@ -201,7 +204,7 @@ except KeyError:
 print('SFAC', SFAC)
 print('UNIT', UNIT)
 print('TREF')
-print('\nHKLF', str('%s'%str(round(z,2))))
+print('\nHKLF',4)
 print('END')
 
 sys.stdout = orig_stdout
