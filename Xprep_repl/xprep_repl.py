@@ -28,11 +28,27 @@ sym_Ops=g.Wyckoff_positions[0]
 
 sym_Ops2 = wp.from_group_and_index(19, 0)
 
-print(list(sym_Ops2))
+# temp_dat=str(sym_Ops2)
+# temp_dat_split=temp_dat.split()[14:]
+# symm_Ops_lst=[]
+# for i in temp_dat_split:
+# 	i.replace('x','X')
+# 	x=re.sub('x','X',i)
+# 	x=re.sub('y','Y',x)
+# 	x=re.sub('z','Z',x)
+# 	symm_Ops_lst.append(x)
 
-print(sym_Ops2)
 
-sym_Ops3 = wp.from_symops(ops=sym_Ops2,group=191)
+# # print(symm_Ops_lst)
+
+# index=0
+# lenList=len(symm_Ops_lst)
+# # print(lenList)
+# while (index < lenList):
+# 	print('SYMM',symm_Ops_lst[index] + symm_Ops_lst[index + 1] + symm_Ops_lst[index + 2])
+# 	index = index + 3
+
+# sym_Ops3 = wp.from_symops(ops=sym_Ops2,group=191)
 
 # print(sym_Ops3)
 
@@ -135,6 +151,7 @@ for match in matches_TITL:
 
 space_Group_diction = {
 	'16': 'P222',
+	'19': 'P212121',
 	'191': 'P6/mmm'
 }
 
@@ -147,6 +164,37 @@ symmetry_op_diction = {
 }
 
 
+###### Using Python Module to Grab Symmetry Operators ########
+
+sym_Ops2 = wp.from_group_and_index(int(space_Group_Number), 0)
+
+temp_dat=str(sym_Ops2)
+temp_dat_split=temp_dat.split()[14:]
+symm_Ops_lst=[]
+for i in temp_dat_split:
+	i.replace('x','X')
+	x=re.sub('x','X',i)
+	x=re.sub('y','Y',x)
+	x=re.sub('z','Z',x)
+	symm_Ops_lst.append(x)
+
+
+# print(symm_Ops_lst)
+
+index=0
+lenList=len(symm_Ops_lst)
+# print(lenList)
+symmList=[]
+while (index < lenList):
+	# print('SYMM',symm_Ops_lst[index] + symm_Ops_lst[index + 1] + symm_Ops_lst[index + 2])
+	statement='SYMM',symm_Ops_lst[index] + symm_Ops_lst[index + 1] + symm_Ops_lst[index + 2]
+	symmList.append(statement)
+	index = index + 3
+
+## How to actual print Symmetry operator list
+
+# for i in symmList:
+# 	print(*i, sep = " ")
 
 #####################################################
 #####################################################
@@ -177,11 +225,29 @@ orig_stdout = sys.stdout
 f = open('cXPREP.ins', 'w')
 sys.stdout = f
 
-print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
+try:
+	print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
+except KeyError:
+	print('------->')
+	print('We currently do not have the symmtry operators OR space group symbol for that particular space group number')
+	print('The script has failed & terminated...')
+	print('Contact rcm347@cornell.edu such that the issue can be address!')
+	print('<-------')
+	exit()
+
+
+# print('TITL', TITL_name, 'in', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('REM', ' reset to', '%s'%str(space_Group_diction[str(space_Group_Number)]), '#%s'%str(space_Group_Number))
 print('CELL',s1,s2)
 print('ZERR', str('%s'%str(round(z))), '0.000', '0.000', '0.000', '0.000', '0.000', '0.000')
 print('LATT', '-1')
+
+
+# try:
+# 	for i in symmList:
+# 		print(*i, sep = " ")
+# except ValueError:
+# 	print('Uh oh... You raised a value error!')
 
 
 try:
