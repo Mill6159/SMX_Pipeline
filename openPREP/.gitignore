@@ -1,0 +1,19 @@
+
+# User-specific stuff
+.idea/*
+
+
+
+# ignore png files
+*.png
+
+# ignore pptx/pdf files
+*.pdf
+*.pptx
+
+# python venv stuff
+venv/*
+
+
+#python stuff
+*.pyc
